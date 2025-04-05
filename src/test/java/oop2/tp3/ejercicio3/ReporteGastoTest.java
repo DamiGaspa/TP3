@@ -2,6 +2,7 @@ package oop2.tp3.ejercicio3;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReporteGastoTest {
@@ -18,7 +19,7 @@ public class ReporteGastoTest {
         reporte.agregarGasto(g1);
         reporte.agregarGasto(g2);
 
-        System.out.println(reporte.imprimir(reporte.listaDeGastos()));
+        assertFalse(reporte.imprimir(reporte.listaDeGastos()).isBlank());
 
     }
 }

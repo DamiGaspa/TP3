@@ -29,25 +29,34 @@ public class ReporteDeGastos {
                 gastosDeComida += gasto.monto;
             }
 
-            String nombreGasto = "";
-            switch (gasto.tipoGasto) {
-                case CENA:
-                    nombreGasto = "Cena";
-                    break;
-                case DESAYUNO:
-                    nombreGasto = "Desayuno";
-                    break;
-                case ALQUILER_AUTO:
-                    nombreGasto = "Alquiler de Autos";
-                    break;
-            }
+            String tipoGasto = esGastoDe(gasto);
 
-            String marcaExcesoComidas = gasto.tipoGasto == TipoDeGasto.CENA && gasto.monto > 5000
-                    || gasto.tipoGasto == TipoDeGasto.DESAYUNO && gasto.monto > 1000 ? "X" : " ";
+            String marcaExcesoComidas = excesoComidas(gasto, 5000, 1000);
 
             total += gasto.monto;
         }
         return "Expenses " + LocalDate.now() + "\nGasto total: " + total;
+    }
+
+    private static String excesoComidas(Gasto gasto, int montoCena, int montoDesayuno) {
+        return gasto.tipoGasto == TipoDeGasto.CENA && gasto.monto > montoCena
+                || gasto.tipoGasto == TipoDeGasto.DESAYUNO && gasto.monto > montoDesayuno ? "X" : " ";
+    }
+
+    private static String esGastoDe(Gasto gasto) {
+        String nombreGasto = "";
+        switch (gasto.tipoGasto) {
+            case CENA:
+                nombreGasto = "Cena";
+                break;
+            case DESAYUNO:
+                nombreGasto = "Desayuno";
+                break;
+            case ALQUILER_AUTO:
+                nombreGasto = "Alquiler de Autos";
+                break;
+        }
+        return nombreGasto;
     }
 
     private static boolean EsDesayuno(Gasto gasto) {

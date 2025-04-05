@@ -33,7 +33,9 @@ public class PersonaRepository {
                 return personas;
 
             }
-            return List.of();
+            else {
+                throw new RuntimeException("Persona no encontrada");
+            }
         });
         };
 
@@ -50,11 +52,12 @@ public class PersonaRepository {
                     .select("select nombre, apellido from persona where id_persona = ?")
                     .bind(0, id).mapToMap(String.class).list();
 
-            if (rs.size() == 0) {
-                return null;
+            if (!rs.isEmpty()) {
+                return new Persona(rs.get(0).get("nombre"), rs.get(0).get("apellido"));
             }
-
-            return new Persona(rs.get(0).get("nombre"), rs.get(0).get("apellido"));
+            else {
+                throw new RuntimeException("No existe la persona con el id: " + id);
+            }
 
         });
     }
