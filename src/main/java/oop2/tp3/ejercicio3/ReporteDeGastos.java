@@ -1,6 +1,7 @@
 package oop2.tp3.ejercicio3;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 enum TipoDeGasto {
@@ -13,14 +14,18 @@ class Gasto {
 }
 
 public class ReporteDeGastos {
-    public void imprimir(List<Gasto> gastos) {
+    private List<Gasto> gastos;
+
+    public ReporteDeGastos() {
+        this.gastos = new ArrayList<Gasto>();
+    }
+
+    public String imprimir(List<Gasto> gastos) {
         int total = 0;
         int gastosDeComida = 0;
 
-        System.out.println("Expenses " + LocalDate.now());
-
         for (Gasto gasto : gastos) {
-            if (gasto.tipoGasto == TipoDeGasto.CENA || gasto.tipoGasto == TipoDeGasto.DESAYUNO) {
+            if (EsCena(gasto) || EsDesayuno(gasto)) {
                 gastosDeComida += gasto.monto;
             }
 
@@ -40,12 +45,24 @@ public class ReporteDeGastos {
             String marcaExcesoComidas = gasto.tipoGasto == TipoDeGasto.CENA && gasto.monto > 5000
                     || gasto.tipoGasto == TipoDeGasto.DESAYUNO && gasto.monto > 1000 ? "X" : " ";
 
-            System.out.println(nombreGasto + "\t" + gasto.monto + "\t" + marcaExcesoComidas);
-
             total += gasto.monto;
         }
+        return "Expenses " + LocalDate.now() + "\nGasto total: " + total;
+    }
 
-        System.out.println("Gastos de comida: " + gastosDeComida);
-        System.out.println("Total de gastos: " + total);
+    private static boolean EsDesayuno(Gasto gasto) {
+        return gasto.tipoGasto == TipoDeGasto.DESAYUNO;
+    }
+
+    private static boolean EsCena(Gasto gasto) {
+        return gasto.tipoGasto == TipoDeGasto.CENA;
+    }
+
+    public void agregarGasto(Gasto gasto) {
+        gastos.add(gasto);
+    }
+
+    public List<Gasto> listaDeGastos() {
+        return gastos;
     }
 }

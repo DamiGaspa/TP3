@@ -9,5 +9,6 @@ public class EjemploDeUsoDelReporte {
         g1.monto =1000;
         var reporte = new ReporteDeGastos();
         reporte.imprimir(List.of(g1));
+        System.out.println(reporte.imprimir(List.of(g1)));
     }
 }

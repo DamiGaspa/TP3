@@ -25,18 +25,17 @@ public class PersonaRepository {
 
             var personas = new ArrayList<Persona>();
 
-            if (rs.size() == 0) {
-                return null;
-            }
+            if (!rs.isEmpty()) {
+                for (Map<String, String> map : rs) {
+                    personas.add(new Persona(map.get("nombre"), map.get("apellido")));
+                }
 
-            for (Map<String, String> map : rs) {
-                personas.add(new Persona(map.get("nombre"), map.get("apellido")));
-            }
+                return personas;
 
-            return personas;
+            }
+            return List.of();
         });
-
-    }
+        };
 
 
     /**
